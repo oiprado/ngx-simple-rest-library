@@ -82,6 +82,8 @@ trace ?: boolean;
 
 * `@Method`
 This decorator allows you to define the name of the resource and type of request
+``` javascript
+
 export interface MethodInfo {
     name: string;
     type: string;
@@ -103,8 +105,10 @@ export interface Header {
       { name: "Authorization", value: "Basic c3ByaW5nLXNlY3VyaXR5LW9hdXRoMi1yZWFkLXdyaXRlLWNsaWVudDpzcHJpbmctc2VjdXJpdHktb2F1dGgyLXJlYWQtd3JpdGUtY2xpZW50LXBhc3N3b3JkMTIzNA=="}
     ] 
   })
-
+```
 Example typescript service class (services/token.service.ts):
+
+``` javascript
 
 import { Injectable } from "@angular/core";
 import { SimpleRest, Method, Resource } from 'ngx-simple-rest';
@@ -236,7 +240,7 @@ import {Article} from '../models/article.model';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [TreeDragDropService, TokenService, OptionService]
+  providers: [TokenService, OptionService]
 })
 export class AppComponent {
 
@@ -253,36 +257,12 @@ export class AppComponent {
 
     constructor(private _TokenService: TokenService, private _OptionService: OptionService) {
 
-        this.items = [
-            {
-                title: 'New',
-                icon: 'fas fa-plus',
-                command: () => {this.save()} 
-            },
-            {
-                icon: 'fas fa-sync',
-                title: 'Refresh',
-                command: () => {this.refresh()} 
-            },
-            {
-                icon: "fas fa-compress-arrows-alt",
-                title: "Ocultar todos",
-                command: () => { this.collapseAll() }
-            }
-            ,
-            {
-                icon: "fas fa-expand-arrows-alt ",
-                title: "Expandir todos",
-                command: () => { this.expandAll() }
-            }
-        ];
-
     }
 
     authenticate() {
-        this._TokenService.token( { username: this.username, password: this.password, grant_type: "password" }).subscribe(response => {
+        this._TokenService.token( { username: this.username, password: this.password, grant_type: "password" }).subscribe((response: Token) => {
             sessionStorage.setItem("access_token", response.access_token);
-            this.refresh();
+
         })
     }
 
@@ -370,38 +350,6 @@ export class AppComponent {
         
     }
 
-    
-
-    onDrop(event) {
-        
-        if(typeof event.dropNode.data === 'string' && typeof event.dragNode.data === 'string'){
-            Swal.fire({
-                type: 'error',
-                title: 'Oops...',
-                text: 'No es posible mover un grupo a otro grupo!',
-              });
-        } else {
-            if(typeof event.dropNode.data === 'string') {
-                const { id} = event.dragNode.data;
-                this._OptionService.moveToGroup(id, event.dropNode.data).subscribe(response => {
-                    this.refresh();
-                    this.selected = null;
-                });
-                
-            } else {
-                event.dragNode.data.groupText = null;
-                event.dragNode.data.parentNode = event.dropNode.data;
-                const from = event.dragNode.data.id;
-                const to = event.dropNode.data.id;
-                this._OptionService.moveOption(from, to).subscribe(response => {
-                    this.refresh();
-                    this.selected = null;
-                });
-            }
-            event.accept();
-        } 
-    }
-
     onSelected(event) {
         if(typeof this.selected.data !== 'string'){
             this.activeSelected = event.node.active;
@@ -417,31 +365,11 @@ export class AppComponent {
     }
 
     removeGroup(){
-        this.loading = true;
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
-            if (result.value) {
-                this.selected.data.groupText = null;
-                
-                this._OptionService.edit(this.selected.data).subscribe(response => {
-                    this.selected = null;
-                    this.refresh();
-                });
-              Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-              )
-            }
-          });
-          this.loading = false;
+       
+	this._OptionService.edit(this.selected.data).subscribe(response => {
+		//Do something
+	});
+
     }
 
 }
