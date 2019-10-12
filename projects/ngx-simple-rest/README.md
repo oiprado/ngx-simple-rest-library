@@ -6,6 +6,7 @@ This package is refactored [ng5-restful](https://github.com/oiprado/ngx-simple-r
 Minimum required versions of dependencies:
 * `@angular/core`: `>=6.0.0`
 * `@angular/common`: `>=6.0.0`
+* `ngx-webstorage`: `^4.0.1`
 * `ramda`: `^0.26.1`
 * `rxjs`: `>=6.0.0`
 
