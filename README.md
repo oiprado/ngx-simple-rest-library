@@ -244,16 +244,8 @@ import {Article} from '../models/article.model';
 })
 export class AppComponent {
 
-    root: TreeNode[]= [];
-    items: MenuItem[];
-    selected: TreeNode;
-    activeSelected: any;
-    loading: boolean = false;
-
-    username: string;
-    password: string;
-
     options: any = {};
+    selected: Option;
 
     constructor(private _TokenService: TokenService, private _OptionService: OptionService) {
 
@@ -262,114 +254,22 @@ export class AppComponent {
     authenticate() {
         this._TokenService.token( { username: this.username, password: this.password, grant_type: "password" }).subscribe((response: Token) => {
             sessionStorage.setItem("access_token", response.access_token);
-
         })
     }
 
     refresh() {
-        this.loading = true;
-        this.root = [];
         this._OptionService.getOptions().subscribe(response => {
             this.options = response;
         });
     }
 
-    initTree() {
-        
-        forEach((option: any) => {
-
-            const node: TreeNode  = {
-                label: option,
-                data: option,
-                expandedIcon: "fa fa-folder-open",
-                collapsedIcon: "fa fa-folder",
-                children: []
-            };
-
-            this.root.push(node);
-            
-            prop(option, this.options).forEach(child => {
-                this.exploreChilds(child, node);
-            });
-
-        })(Object.keys(this.options));
-        this.loading = false;
-
-    }
-
-    private exploreChilds(node: any, parentNode: TreeNode) {
-
-        let treeNode : TreeNode  = {
-            label: node.name,
-            data: node,
-            expandedIcon: "fa fa-folder-open",
-            collapsedIcon: "fa fa-folder",
-            icon: "fa fa-circle",
-            draggable: true,
-            droppable: true,
-            selectable: true,
-            children: []
-        };
-        if(node.childs !== null && node.childs.length > 0) {
-            node.childs.forEach(child => {
-                this.exploreChilds(child, treeNode);
-            });
-        }
-        parentNode.children.push(treeNode);
-        
-    }
-
-    expandAll(){
-        this.root.forEach( node => {
-            this.expandRecursive(node, true);
-        } );
-    }
-
-    collapseAll(){
-        this.root.forEach( node => {
-            this.expandRecursive(node, false);
-        } );
-    }
-
-    private expandRecursive(node:TreeNode, isExpand:boolean){
-        node.expanded = isExpand;
-        if(node.children){
-            node.children.forEach( childNode => {
-                this.expandRecursive(childNode, isExpand);
-            } );
-        }
-    }
-
     save() {
-        this._OptionService.edit(this.selected.data).subscribe(response => {
-            this.selected = null;
+        this._OptionService.edit(this.selected).subscribe(response => {
             this.refresh();
         }, error => {
             console.log(error);
         });
         
-    }
-
-    onSelected(event) {
-        if(typeof this.selected.data !== 'string'){
-            this.activeSelected = event.node.active;
-        }
-    }
-
-    isGroup() {
-        if(typeof this.selected.data === 'string') {
-            return true
-        } else {
-            return false;
-        }
-    }
-
-    removeGroup(){
-       
-	this._OptionService.edit(this.selected.data).subscribe(response => {
-		//Do something
-	});
-
     }
 
 }
