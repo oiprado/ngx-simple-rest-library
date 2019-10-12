@@ -80,7 +80,7 @@ This decorator allows you to define the endpoint.
 | basePath        | basePath is the URL prefix for all API paths, relative to the host root                          | string  |
 | useBasicAuth *  | Basic authentication is a very simple authentication scheme that is built into the HTTP protocol | boolean |
 | useToken *      | The SimpleRest abstract class retrieves the token from the "access_token" browser session to invoke a RESTful service that requires authentication                                             | boolean |
-| trace *         | *options: object, *path: string                                                                  | boolean |
+| trace *         | Allows you to display variable values in the browser console                                                                 | boolean |
 
 _Parameters marked with * are optional._
 
