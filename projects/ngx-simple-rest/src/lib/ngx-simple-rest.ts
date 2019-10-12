@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 // import { resolveResourceApi } from './api-routes';
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+
 import { Inject } from '@angular/core';
 import { MethodInfo } from './method-info';
 import { ResourceInfo } from './resource-info';
@@ -12,8 +12,8 @@ export abstract class SimpleRest <T> {
 
   private resourceApi: any;// = resolveResourceApi();
   private _httpClient: HttpClient;
-  protected _sessionStorage: SessionStorageService;
-  protected _localStorage: LocalStorageService;
+  // protected _sessionStorage: SessionStorageService;
+  // protected _localStorage: LocalStorageService;
   private trace: boolean = false;
 
   resourceInfo: ResourceInfo;
