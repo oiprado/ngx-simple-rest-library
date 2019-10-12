@@ -80,6 +80,15 @@ useBasicAuth ?: boolean;
 useToken ?: boolean;
 trace ?: boolean;
 
+``` javascript
+@Resource(
+  {
+    host: "<<Endpoint URL>>",
+    basePath: "<<basePath>>"
+  }
+)
+```
+
 * `@Method`
 This decorator allows you to define the name of the resource and type of request
 ``` javascript
