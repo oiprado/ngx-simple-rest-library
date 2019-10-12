@@ -74,6 +74,16 @@ export class Article {
 
 This decorator allows you to define the endpoint.
 
+| Property        | Arguments                                    | Type    |
+|:----------------|:---------------------------------------------|:--------|
+| host            | path: string, *options: object               | string  |
+| basePath        | path: string, body: any, *options: object    | string  |
+| useBasicAuth *  | path: string, body: any, *options: object    | boolean |
+| useToken *      | path: string, *options: object               | boolean |
+| trace *         | *options: object, *path: string              | boolean |
+
+_Parameters marked with * are optional._
+
 host: string;
 basePath: string;
 useBasicAuth ?: boolean;
@@ -87,6 +97,15 @@ trace ?: boolean;
     basePath: "<<basePath>>"
   }
 )
+
+export interface ResourceInfo {
+    host: string;
+    basePath: string;
+    useBasicAuth?: boolean;
+    useToken?: boolean;
+    trace?: boolean;
+}
+
 ```
 
 * `@Method`
