@@ -46,27 +46,6 @@ This library ** does not ** contain an angular module with exported components a
 This library aims to minimize the lines of code by providing an abstract class that consumes RESTful services in an easy and fast way. 
 And also, it provides a level of consistency to your Angular application.
 
-##
-
-### Creating model
-Model classes, which represents resource from your REST API, are created in following way:
-(Deserialization will be handled by Angular `HttpClient` request library.)
-
-Exmaple typescript model class (models/article.model.ts):
-``` javascript
-import {ArticleType} from './article-type.model';
-
-export class Article {
-    id: number;
-    name: string;
-    content: string;
-    articleType: ArticleType;
-    createdBy: string;
-    created: Date;
-    updated: Date;
-}
-```
-
 ### Implementing service
 
 #### Decorators
