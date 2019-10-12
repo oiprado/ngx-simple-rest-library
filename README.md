@@ -1,7 +1,7 @@
 # ngx-simple-rest
 > Angular library for easy integration with RESTful APIs.
 
-This package is refactored [ngx-simple-rest](https://github.com/oiprado/ngx-simple-rest-library) in a way to use and support newest Angular 6 and RxJs 6 features.
+This package is refactored [ngx-simple-rest](https://www.npmjs.com/package/ngx-simple-rest) in a way to use and support newest Angular 6 and RxJs 6 features.
 
 Minimum required versions of dependencies:
 * `@angular/core`: `>=6.0.0`
