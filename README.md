@@ -74,21 +74,17 @@ export class Article {
 
 This decorator allows you to define the endpoint.
 
-| Property        | Arguments                                    | Type    |
-|:----------------|:---------------------------------------------|:--------|
-| host            | path: string, *options: object               | string  |
-| basePath        | path: string, body: any, *options: object    | string  |
-| useBasicAuth *  | path: string, body: any, *options: object    | boolean |
-| useToken *      | path: string, *options: object               | boolean |
-| trace *         | *options: object, *path: string              | boolean |
+| Property        | Arguments                                                                                        | Type    |
+|:----------------|:-------------------------------------------------------------------------------------------------|:--------|
+| host            | host is the domain name or IP address (IPv4) of the host that serves the API                     | string  |
+| basePath        | basePath is the URL prefix for all API paths, relative to the host root                          | string  |
+| useBasicAuth *  | Basic authentication is a very simple authentication scheme that is built into the HTTP protocol | boolean |
+| useToken *      | The SimpleRest abstract class retrieves the token from the "access_token" browser session to 
+                   invoke a RESTful service that requires authentication                                             | boolean |
+| trace *         | *options: object, *path: string                                                                  | boolean |
 
 _Parameters marked with * are optional._
 
-host: string;
-basePath: string;
-useBasicAuth ?: boolean;
-useToken ?: boolean;
-trace ?: boolean;
 
 ``` javascript
 @Resource(
