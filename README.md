@@ -76,8 +76,8 @@ This decorator allows you to define the endpoint.
 
 | Property        | Arguments                                                                                        | Type    |
 |:----------------|:-------------------------------------------------------------------------------------------------|:--------|
-| host            | host is the domain name or IP address (IPv4) of the host that serves the API                     | string  |
-| basePath        | basePath is the URL prefix for all API paths, relative to the host root                          | string  |
+| host            | Host is the domain name or IP address (IPv4) of the host that serves the API                     | string  |
+| basePath        | BasePath is the URL prefix for all API paths, relative to the host root                          | string  |
 | useBasicAuth *  | Basic authentication is a very simple authentication scheme that is built into the HTTP protocol | boolean |
 | useToken *      | The SimpleRest abstract class retrieves the token from the "access_token" browser session to invoke a RESTful service that requires authentication                                             | boolean |
 | trace *         | Allows you to display variable values in the browser console                                                                 | boolean |
@@ -105,6 +105,14 @@ export interface ResourceInfo {
 
 * `@Method`
 This decorator allows you to define the name of the resource and type of request
+
+| Property        | Arguments                                                                                        | Type    |
+|:----------------|:-------------------------------------------------------------------------------------------------|:--------|
+| name            | Host is the domain name or IP address (IPv4) of the host that serves the API                     | string  |
+| type        | Request types supported: GET (get), POST (post), PUT (put), DELETE (delete), POST-PARAMS (post-params), GET-URL (get-url)| string  |
+| requestParams | Convert object to query parameter                          | boolean  |
+| headers *  | Enter all the headers you need | Header[] |
+
 ``` javascript
 
 export interface MethodInfo {
