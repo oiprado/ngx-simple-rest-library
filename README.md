@@ -218,14 +218,6 @@ export class OptionService extends SimpleRest <any>{
 }
 ```
 
-When performing updateOne(), deleteOne(), createOn() or non-RESTful requests using get(), post(), put(), delete() methods
-from RestService, then returned value should be provided as Generic type when calling methods, example class could be
-GenericResponse which is packed also in this library. GenericResponse contains three fields:
-* **success** - _true_ if request was successful, _false_ otherwise
-* **message** - Optional message of requested result from server
-* **data** - map with custom values in format: _key -> value_
-
-It's structure is following:
 ``` javascript
 export interface Token {
     access_token: string,
