@@ -140,7 +140,7 @@ export class TokenService extends SimpleRest<Token> {
   }
   
 }
-
+```
 Example typescript service class (services/option.service.ts):
 ``` javascript
 import { Injectable } from "@angular/core";
