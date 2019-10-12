@@ -79,8 +79,7 @@ This decorator allows you to define the endpoint.
 | host            | host is the domain name or IP address (IPv4) of the host that serves the API                     | string  |
 | basePath        | basePath is the URL prefix for all API paths, relative to the host root                          | string  |
 | useBasicAuth *  | Basic authentication is a very simple authentication scheme that is built into the HTTP protocol | boolean |
-| useToken *      | The SimpleRest abstract class retrieves the token from the "access_token" browser session to 
-                   invoke a RESTful service that requires authentication                                             | boolean |
+| useToken *      | The SimpleRest abstract class retrieves the token from the "access_token" browser session to invoke a RESTful service that requires authentication                                             | boolean |
 | trace *         | *options: object, *path: string                                                                  | boolean |
 
 _Parameters marked with * are optional._
