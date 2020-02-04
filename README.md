@@ -280,3 +280,6 @@ export class AppComponent {
 License
 - 
 MIT
+
+## Contact
+Created by [@oiprado](https://www.linkedin.com/in/oscar-iv%C3%A1n-prado-perdomo-60a70262/) - feel free to contact me!
