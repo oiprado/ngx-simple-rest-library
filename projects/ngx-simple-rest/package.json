@@ -1,6 +1,6 @@
 {
   "name": "ngx-simple-rest",
-  "version": "0.1.11",
+  "version": "0.1.14",
   "description": "This library allows you to interact with RESTful services quickly and easily",
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
@@ -10,7 +10,8 @@
   "repository": {
     "type": "github",
     "url": "https://github.com/oiprado/ngx-simple-rest-library.git"
-  }, "homepage": "https://github.com/oiprado/ngx-simple-rest-library.git",
+  },
+  "homepage": "https://github.com/oiprado/ngx-simple-rest-library.git",
   "keywords": [
     "javscript",
     "restful-services",
@@ -19,5 +20,5 @@
     "angular",
     "generic"
   ],
-    "license": "MIT"
+  "license": "MIT"
 }

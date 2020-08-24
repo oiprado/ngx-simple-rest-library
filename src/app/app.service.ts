@@ -1,14 +1,13 @@
 
 
 import { HttpClient } from '@angular/common/http';
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { Observable } from 'rxjs';
 import { SimpleRest } from 'projects/ngx-simple-rest/src/public_api';
 
 
 // @SimpleRest({ context: "", resource: "" })
 export class AppService extends SimpleRest<Object> {
-  
+
   // constructor(
   //   private httpClient: HttpClient,
   //   private localStorage: LocalStorageService,
@@ -35,23 +34,23 @@ export class AppService extends SimpleRest<Object> {
             "requestParams": false,
             "method": "get",
             "resource": "/findAll",
-            "header": 
-            [
+            "header":
+              [
                 // { "name": "Cache-Control", "value": "no-cache" },
                 // { "name": "Content-Type", "value": "application/json" }
-            ]
+              ]
           }
         ]
       }
     };
-  }  
-  
+  }
+
   getApiName(): string {
     return "security";
   }
 
 
-  public getAllGroups(): Observable<any>{
+  public getAllGroups(): Observable<any> {
     return this.resolveApi("findAll");
   }
 
@@ -61,7 +60,7 @@ export class AppService extends SimpleRest<Object> {
     // )
 
     return null;
-    
+
   }
 
   public helloWorldPathVariable(name: string) {
@@ -69,11 +68,11 @@ export class AppService extends SimpleRest<Object> {
   }
 
   public helloWorldObjectWithPath(name: string) {
-    return this.resolveApi("helloWorldObjectWithPath", {name: name });
+    return this.resolveApi("helloWorldObjectWithPath", { name: name });
   }
 
   public helloWorldWithPostRequest(name: string) {
-    return this.resolveApi("helloWorldWithPostRequest", {name: name });
+    return this.resolveApi("helloWorldWithPostRequest", { name: name });
   }
 
 
