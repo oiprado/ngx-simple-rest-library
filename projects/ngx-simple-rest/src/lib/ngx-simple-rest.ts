@@ -2,18 +2,15 @@ import { forEach, isNil, replace, forEachObjIndexed, find, propEq } from 'ramda'
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-// import { resolveResourceApi } from './api-routes';
 
 import { Inject } from '@angular/core';
 import { MethodInfo } from './method-info';
 import { ResourceInfo } from './resource-info';
 
-export abstract class SimpleRest <T> {
+export abstract class SimpleRest<T> {
 
-  private resourceApi: any;// = resolveResourceApi();
+  private resourceApi: any;
   private _httpClient: HttpClient;
-  // protected _sessionStorage: SessionStorageService;
-  // protected _localStorage: LocalStorageService;
   private trace: boolean = false;
 
   resourceInfo: ResourceInfo;
@@ -22,13 +19,9 @@ export abstract class SimpleRest <T> {
 
 
   constructor(
-    @Inject(HttpClient) $httpClient: HttpClient/*, 
-    @Inject(LocalStorageService) $localStorage: LocalStorageService, 
-    @Inject(SessionStorageService) $sessionStorage: SessionStorageService*/
+    @Inject(HttpClient) $httpClient: HttpClient
   ) {
     this._httpClient = $httpClient;
-    // this._localStorage = $localStorage;
-    // this._sessionStorage = $sessionStorage;
     this.onInit();
   }
 
@@ -41,44 +34,44 @@ export abstract class SimpleRest <T> {
   }
 
   protected onInit(): void { }
-  
+
   protected unauthorized(error): void { }
 
   protected badRequest(error): void { }
 
-  protected internalServerError(error): void {}
+  protected internalServerError(error): void { }
 
-  protected unhandleError(error): void {}
+  protected unhandleError(error): void { }
 
-  protected pageable(routeName: string, page: number, size: number, body?, options?){ }
+  protected pageable(routeName: string, page: number, size: number, body?, options?) { }
 
   protected invokeResource(resource, body?: any): Observable<any> {
-    
+
     this.resourceInfo = resource.resource();
     this.trace = this.resourceInfo.trace;
 
     return this.request(
-      this.buildUrlFromResource( this.resourceInfo, this.methodInfo ), 
-      body, 
-      this.methodInfo.type, 
-      this.resourceInfo.useToken, 
-      this.resourceInfo.useBasicAuth, 
-      null, 
-      this.methodInfo.requestParams, 
+      this.buildUrlFromResource(this.resourceInfo, this.methodInfo),
+      body,
+      this.methodInfo.type,
+      this.resourceInfo.useToken,
+      this.resourceInfo.useBasicAuth,
+      null,
+      this.methodInfo.requestParams,
       this.methodInfo.headers
     ).pipe
-    (
-      tap(response => response)
-      , catchError((error: HttpErrorResponse) => {
+      (
+        tap(response => response)
+        , catchError((error: HttpErrorResponse) => {
           // console.log(error);
           this.handleError(error);
           return Observable.throw(error);
-      })
-    );
+        })
+      );
   }
 
   protected resolveResource<T>(resource: string, body?, options?): Observable<T> {
-   
+
     this.resourceApi = this.resolveResourceApi();
 
     const apiResource: any = this.resourceApi[this.getApiName()];
@@ -88,9 +81,9 @@ export abstract class SimpleRest <T> {
     if (!isNil(apiResource)) {
 
       const { host, basePath, useToken, useBasicAuth, token, trace } = apiResource;
-        
+
       if (!isNil(trace)) {
-        this.trace = trace;body; 
+        this.trace = trace; body;
       }
 
       if (!isNil(resourceAPI)) {
@@ -99,13 +92,13 @@ export abstract class SimpleRest <T> {
         const url = this.buildUrl(host, basePath, resource);
 
         return this.request(url, body, method, useToken, useBasicAuth, token, requestParams, header).pipe
-        (
-          tap(response => response)
-          , catchError((error: HttpErrorResponse) => {
+          (
+            tap(response => response)
+            , catchError((error: HttpErrorResponse) => {
               this.handleError(error);
               return Observable.throw(error);
-          })
-        );
+            })
+          );
       }
     }
   }
@@ -113,7 +106,7 @@ export abstract class SimpleRest <T> {
   protected resolveApi(resource: string, body?, options?): Observable<any> {
 
     this.resourceApi = this.resolveResourceApi();
-   
+
     const apiResource: any = this.resourceApi[this.getApiName()];
 
     const resourceAPI: any = find(propEq('name', resource))(apiResource.resources);
@@ -121,7 +114,7 @@ export abstract class SimpleRest <T> {
     if (!isNil(apiResource)) {
 
       const { host, basePath, useToken, useBasicAuth, token, trace } = apiResource;
-        
+
       if (!isNil(trace)) {
         this.trace = trace;
       }
@@ -132,21 +125,20 @@ export abstract class SimpleRest <T> {
         const url = this.buildUrl(host, basePath, resource);
 
         return this.request(url, body, method, useToken, useBasicAuth, token, requestParams, header).pipe
-        (
-          tap(response => response)
-          , catchError((error: HttpErrorResponse) => {
-              // console.log(error);
+          (
+            tap(response => response)
+            , catchError((error: HttpErrorResponse) => {
               this.handleError(error);
               return null;
-          })
-        );
+            })
+          );
       }
     }
   }
 
   private buildUrlFromResource = (resourceInfo: ResourceInfo, methodInfo: MethodInfo): string => {
 
-    return this.buildUrl( resourceInfo.host, resourceInfo.basePath, methodInfo.name );
+    return this.buildUrl(resourceInfo.host, resourceInfo.basePath, methodInfo.name);
 
   }
 
@@ -168,23 +160,23 @@ export abstract class SimpleRest <T> {
     if (!isNil(token)) {
       headers = headers.append('Authorization', token);
     }
-    
-    if(!isNil(options)) {
+
+    if (!isNil(options)) {
       const propertiesForEach = (item) => {
         headers = headers.append(item.name, item.value);
       };
       forEach(propertiesForEach, options);
     }
 
-    if(isNil(requestParams)) {
+    if (isNil(requestParams)) {
       requestParams = false;
     }
 
-    if(requestParams) {
+    if (requestParams) {
       body = this.convertToParams(body);
     }
 
-    if(this.trace) {
+    if (this.trace) {
       console.log("----------");
       console.log(`url: ${url}`);
       console.log(`useBasicAuth: ${useBasicAuth}`);
@@ -230,15 +222,14 @@ export abstract class SimpleRest <T> {
 
 
   private postParams = (url: string, params, headers: HttpHeaders): Observable<Object> => {
-    
+
     url = `${url}?${params}`;
-    // console.log(url)
-    return this._httpClient.post(url,null, { headers: headers });
+    return this._httpClient.post(url, null, { headers: headers });
   }
 
   private post = (url: string, body, requestParams: boolean, headers: HttpHeaders): Observable<Object> => {
 
-    if(requestParams){
+    if (requestParams) {
       url = `${url}?${body}`;
       body = null;
     }
@@ -248,7 +239,7 @@ export abstract class SimpleRest <T> {
 
   private get = (url: string, body, requestParams: boolean, headers: HttpHeaders): Observable<Object> => {
 
-    if(requestParams) {
+    if (requestParams) {
       url = `${url}?${body}`;
     }
 
@@ -257,8 +248,6 @@ export abstract class SimpleRest <T> {
 
   private getUrl = (url: string, body, headers: HttpHeaders): Observable<Object> => {
 
-    console.log(this.urlResolve(url, body));
-    
     return this._httpClient.get(this.urlResolve(url, body), { headers: headers });
   }
 
@@ -273,26 +262,26 @@ export abstract class SimpleRest <T> {
   private urlResolve(url: string, body: Object): string {
 
     const urlResolve = (value, key) => {
-      url = replace(`{${key}}`, value , url);
+      url = replace(`{${key}}`, value, url);
     };
-    forEachObjIndexed(urlResolve, body); 
+    forEachObjIndexed(urlResolve, body);
     return url;
   }
 
 
   // tslint:disable-next-line:no-shadowed-variable
   protected handleError(error): void {
-    
-    switch(error.status) {
+
+    switch (error.status) {
       case 401: {
         this.unauthorized(error);
         break;
       }
-      case 400:{
+      case 400: {
         this.badRequest(error);
         break;
       }
-      case 500:{
+      case 500: {
         this.internalServerError(error);
         break;
       }
