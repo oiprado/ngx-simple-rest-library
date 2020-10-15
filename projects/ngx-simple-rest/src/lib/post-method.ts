@@ -2,6 +2,10 @@ import { MethodInfo } from "./method-info";
 import { ResourceInfo } from './resource-info';
 import { SimpleRest } from './ngx-simple-rest';
 
+/**
+	Decorator that permit tag an request type
+**/
+
 export function PostMethod(methodInfo: MethodInfo) {
   
   return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
@@ -21,4 +25,6 @@ export function PostMethod(methodInfo: MethodInfo) {
 }
 
 
-
+/**
+	End Decorator that permit tag an request type
+**/
