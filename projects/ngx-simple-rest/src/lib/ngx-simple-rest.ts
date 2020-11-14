@@ -6,6 +6,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { Inject } from '@angular/core';
 import { MethodInfo } from './method-info';
 import { ResourceInfo } from './resource-info';
+import { UrlNormalizer } from './url-normalizer';
 
 export abstract class SimpleRest<T> {
 
@@ -45,6 +46,26 @@ export abstract class SimpleRest<T> {
 
   protected pageable(routeName: string, page: number, size: number, body?, options?) { }
 
+  protected resolve(resource, body?: any, requestParams?: boolean, options?)  {
+    this.resourceInfo = resource.resource();
+    let url = new UrlNormalizer(
+      this.resourceInfo,
+      this.methodInfo,
+      body
+    ).normalize();
+
+    this.requestNew(
+      url,
+      body,
+      this.resourceInfo,
+      this.methodInfo,
+      requestParams,
+      options
+    )
+
+    console.log(url);
+  }
+
   protected invokeResource(resource, body?: any): Observable<any> {
 
     this.resourceInfo = resource.resource();
@@ -61,9 +82,8 @@ export abstract class SimpleRest<T> {
       this.methodInfo.headers
     ).pipe
       (
-        tap(response => response)
-        , catchError((error: HttpErrorResponse) => {
-          // console.log(error);
+        tap(response => response), 
+        catchError((error: HttpErrorResponse) => {
           this.handleError(error);
           return Observable.throw(error);
         })
@@ -147,6 +167,67 @@ export abstract class SimpleRest<T> {
     const url = `${host}${basePath}${resource}`;
 
     return url;
+  }
+
+  private requestNew = (url: string, resourceInfo: ResourceInfo, methodInfo: MethodInfo, requestParams: boolean,body?, options?) : Observable<any> => {
+    let headers: HttpHeaders = new HttpHeaders();
+
+    if (resourceInfo.useToken) {
+      // token = `Bearer ${localStorage.getItem('access_token') || sessionStorage.getItem('access_token')} `;
+    }
+
+    // if (!isNil(token)) {
+    //   headers = headers.append('Authorization', token);
+    // }
+
+    if (!isNil(options)) {
+      const propertiesForEach = (item) => {
+        headers = headers.append(item.name, item.value);
+      };
+      forEach(propertiesForEach, options);
+    }
+
+    if (isNil(requestParams)) {
+      requestParams = false;
+    }
+
+    if (requestParams) {
+      body = this.convertToParams(body);
+    }
+
+    if (this.trace) {
+      console.log("----------");
+      console.log(`url: ${url}`);
+      console.log(`useBasicAuth: ${resourceInfo.useBasicAuth}`);
+      console.log(`useToken: ${resourceInfo.useToken}`);
+      // console.log(`token: ${resourceInfo.token}`);
+      console.log(`method type: ${methodInfo.type}`);
+      console.log(`Request param: ${requestParams}`);
+      console.log(`body:\n`);
+      console.log(`\t${body}`);
+      const showHeaders = (item) => {
+        console.log(`${item.name}: ${item.value}`);
+      };
+
+      forEach(showHeaders, options);
+      console.log("----------");
+    }
+
+    let method = methodInfo.type;
+
+    if (method === "post-params") {
+      return this.postParams(url, this.convertToParams(body), headers);
+    } else if (method === "post") {
+      return this.post(url, body, requestParams, headers);
+    } else if (method === "put") {
+      return this.put(url, body, headers);
+    } else if (method === "get") {
+      return this.get(url, body, requestParams, headers);
+    } else if (method === "get-url") {
+      return this.getUrl(url, body, headers);
+    } else if (method === "delete") {
+      return this.delete(url, body, headers);
+    }
   }
 
   private request = (url: string, body, method: string, useToken: boolean, useBasicAuth: boolean, token: string, requestParams: boolean, options?): Observable<any> => {

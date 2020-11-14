@@ -1,8 +1,9 @@
 
 export interface MethodInfo {
   name: string,
-  type: string,
+  type?: string,
   requestParams?: boolean,
+  appendBody?: boolean
   headers?: Header[]
 }
 

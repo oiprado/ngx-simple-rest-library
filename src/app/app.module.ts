@@ -10,6 +10,7 @@ import { AppService } from './app.service';
 import { GroupResource } from './group-resource';
 import { OAuthService } from './oauth.service';
 import { UserService } from './user.service';
+import { MovieService } from './movies.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { UserService } from './user.service';
     AppService,
     GroupResource,
     OAuthService,
-    UserService
+    UserService,
+    MovieService
   ],
   bootstrap: [AppComponent]
 })

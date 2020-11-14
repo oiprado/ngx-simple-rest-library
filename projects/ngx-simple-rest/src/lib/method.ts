@@ -9,10 +9,8 @@ export function Method(methodInfo: MethodInfo) {
     let originalMethod = descriptor.value;
 
     descriptor.value = function (...args: any[]) {
-        
         this.methodInfo = methodInfo;
         let result = originalMethod.apply(this, args);
-
         return result;
     }
     

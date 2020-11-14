@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
 import { GroupResource } from './group-resource';
+import { MovieService } from './movies.service';
 import { OAuthService } from './oauth.service';
 import { UserService } from './user.service';
 
@@ -12,10 +13,21 @@ import { UserService } from './user.service';
 export class AppComponent {
   title = 'ngx-simple-rest-library';
 
-  constructor(private groupResource: GroupResource, private _OAuthService: OAuthService, private _UserService: UserService) {
+  constructor(
+    private groupResource: GroupResource, 
+    private _OAuthService: OAuthService, 
+    private _UserService: UserService,
+    private _movieService: MovieService) {
 
   }
 
+  getMovies() {
+    this._movieService.movie(1);
+  }
+
+  post() {
+    this._movieService.newMovie(1);
+  }
 
   logIn() { 
     this._OAuthService.authenticate({ username: "oiprado", password: "admin", remember: true });
