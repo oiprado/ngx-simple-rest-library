@@ -1,6 +1,4 @@
 import { MethodInfo } from "./method-info";
-import { ResourceInfo } from './resource-info';
-import { SimpleRest } from './ngx-simple-rest';
 
 export function Method(methodInfo: MethodInfo) {
   
