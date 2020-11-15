@@ -11,16 +11,15 @@ import { PostRequest } from './post-request';
 import { PutRequest } from './put-request';
 import { GetRequest } from './get-request';
 import { DeleteRequest } from './delete-request';
-import { convertToParams, log } from './common';
 import { OptionsNormalizer } from './options-normalizer';
+import { log } from './common';
 
 export abstract class SimpleRest<T> {
 
   private _httpClient: HttpClient;
-
-  resourceInfo: ResourceInfo;
-  methodInfo: MethodInfo;
-  body: any;
+  private body: any;
+  private resourceInfo: ResourceInfo;
+  private methodInfo: MethodInfo;
 
 
   constructor(
@@ -61,10 +60,9 @@ export abstract class SimpleRest<T> {
     let url = new UrlNormalizer(this.resourceInfo,this.methodInfo,body).normalize();
     let options = new OptionsNormalizer(resourceInfo, methodInfo).normalize();
     
-    log(resourceInfo, url, methodInfo, body);
+    log(this.resourceInfo, url, this.methodInfo, this.body);
 
     let methodType = methodInfo.type;
-
     let abstractRequest: AbstractRequest;
 
     if (methodType === "post") {
