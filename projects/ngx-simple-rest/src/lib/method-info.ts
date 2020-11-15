@@ -2,12 +2,17 @@
 export interface MethodInfo {
   name: string,
   type?: string,
-  requestParams?: boolean,
   appendBody?: boolean
-  headers?: Header[]
+  headers?: Header[],
+  options?: any[]
 }
 
 export interface Header {
   name: string;
   value: string;
+}
+
+export interface Option {
+  name: string;
+  value: any;
 }

@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import { AppService } from './app.service';
-import { GroupResource } from './group-resource';
 import { MovieService } from './movies.service';
-import { OAuthService } from './oauth.service';
-import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -14,91 +10,98 @@ export class AppComponent {
   title = 'ngx-simple-rest-library';
 
   constructor(
-    private groupResource: GroupResource, 
-    private _OAuthService: OAuthService, 
-    private _UserService: UserService,
     private _movieService: MovieService) {
 
   }
 
   getMovies() {
-    this._movieService.movie(1);
+    this._movieService.movie(1).subscribe(data => {
+      console.log(data);
+    });
   }
 
   post() {
-    this._movieService.newMovie(1);
+    this._movieService.newMovie({id: 1, name: "my name", type: 3}).subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  post2() {
+    this._movieService.newMovie2({id: 1, name: "my name", type: 3}).subscribe(data => {
+      console.log(data);
+    });
   }
 
   logIn() { 
-    this._OAuthService.authenticate({ username: "oiprado", password: "admin", remember: true });
+    // this._OAuthService.authenticate({ username: "oiprado", password: "admin", remember: true });
   }
 
   getOptions() {
-    this._UserService.findById(16).subscribe(response => {
-      console.log(response);
-    });
+    // this._UserService.findById(16).subscribe(response => {
+    //   console.log(response);
+    // });
   }
 
   create() {
-    this.groupResource.create(
-      {
-        name: "SALES",
-        active: "Y"
-      }
-    ).subscribe(response => {
-      console.log(response);
-    });
+    // this.groupResource.create(
+    //   {
+    //     name: "SALES",
+    //     active: "Y"
+    //   }
+    // ).subscribe(response => {
+    //   console.log(response);
+    // });
   }
 
   edit() {
-    this.groupResource.edit(
-      {
-        id: 2,
-        name: "SALES",
-        active: "N"
-      }
-    ).subscribe(response => {
-      console.log(response);
-    });
+    // this.groupResource.edit(
+    //   {
+    //     id: 2,
+    //     name: "SALES",
+    //     active: "N"
+    //   }
+    // ).subscribe(response => {
+    //   console.log(response);
+    // });
   }
 
   remove() {
-    this.groupResource.remove(
-      {
-        id: 2,
-        name: "SALES",
-        active: "N"
-      }
-    ).subscribe(response => {
-      console.log(response);
-    });
+    // this.groupResource.remove(
+    //   {
+    //     id: 2,
+    //     name: "SALES",
+    //     active: "N"
+    //   }
+    // ).subscribe(response => {
+    //   console.log(response);
+    // });
   }
 
   addUserToGroup() {
-    this.groupResource.addUser({
-        account: {
-          id: 15
-        },
-        group: {
-          id: 1
-        }
-      }
-    ).subscribe(response => {
-      console.log( response );
-    })
+    // this.groupResource.addUser({
+    //     account: {
+    //       id: 15
+    //     },
+    //     group: {
+    //       id: 1
+    //     }
+    //   }
+    // ).subscribe(response => {
+    //   console.log( response );
+    // })
   }
 
   findAll() {
-    this.groupResource.find().subscribe(response => {
-      console.log(response);
-    });
+    // this.groupResource.find().subscribe(response => {
+    //   console.log(response);
+    // });
   }
 
   findById() {
 
-    this.groupResource.findById(1).subscribe(response => {
-      console.log(response);
-    });
+    // this.groupResource.findById(1).subscribe(response => {
+    //   console.log(response);
+    // });
 
   }
 

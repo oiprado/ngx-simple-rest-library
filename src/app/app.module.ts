@@ -6,10 +6,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 // import { NgxSimpleRestModule } from 'projects/ngx-simple-rest/src/public_api';
 // import { NgxWebstorageModule } from 'ngx-webstorage';
-import { AppService } from './app.service';
-import { GroupResource } from './group-resource';
-import { OAuthService } from './oauth.service';
-import { UserService } from './user.service';
 import { MovieService } from './movies.service';
 
 @NgModule({
@@ -26,10 +22,6 @@ import { MovieService } from './movies.service';
 
   ],
   providers: [
-    AppService,
-    GroupResource,
-    OAuthService,
-    UserService,
     MovieService
   ],
   bootstrap: [AppComponent]
