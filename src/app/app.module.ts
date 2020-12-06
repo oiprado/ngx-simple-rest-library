@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 // import { NgxSimpleRestModule } from 'projects/ngx-simple-rest/src/public_api';
 // import { NgxWebstorageModule } from 'ngx-webstorage';
 import { MovieService } from './movies.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,9 +18,7 @@ import { MovieService } from './movies.service';
     BrowserModule,
     CommonModule,
     HttpClientModule,
-    // NgxSimpleRestModule,
-    // NgxWebstorageModule.forRoot() 
-
+    FormsModule
   ],
   providers: [
     MovieService

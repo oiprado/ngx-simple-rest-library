@@ -8,20 +8,22 @@ import { MovieService } from './movies.service';
 })
 export class AppComponent {
   title = 'ngx-simple-rest-library';
+  LANGUAGE: string = "en-US";
+  movieId: number;
 
   constructor(
     private _movieService: MovieService) {
-
+      
   }
 
   getMovies() {
-    this._movieService.movie(1).subscribe(data => {
+    this._movieService.movie(this.movieId, 1, this.LANGUAGE).subscribe(data => {
       console.log(data);
     });
   }
 
   post() {
-    this._movieService.newMovie({id: 1, name: "my name", type: 3}).subscribe(data => {
+    this._movieService.getMovieDetail(this.movieId, this.LANGUAGE).subscribe(data => {
       console.log(data);
     });
   }
