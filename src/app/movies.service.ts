@@ -16,16 +16,14 @@ import { AppSettings } from "./configuration";
 export class MovieService extends SimpleRest<any> {
 
   @Get({
-    name: "/{group}/{movie}?access_token={access_token}",
+    name: "/{category}/{code}?api_key={access_token}",
     headers: [
-      { name: "TENANT_ID", value: "xxx-xxx-xxx" }
+    
     ]
   })
   movie(movieId: number): Observable<any> {
-
-    localStorage.setItem("token", "0dbb3f6f-a4a4-4357-ada4-d7f9608e29eb");
-    localStorage.setItem("access_token", "9f77b83c-2f09-475d-afce-afde9a0dbcba");
-    return this.resolve(this, { group: "horror", movie: movieId, page: 0, size: 10});
+    localStorage.setItem("access_token", "18d22f877231eeb12b27cbd32aaab4db");
+    return this.resolve(this, { category: "horror", code: movieId, page: 0, size: 10});
   }
 
   @Post({

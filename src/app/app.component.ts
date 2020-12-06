@@ -14,14 +14,15 @@ export class AppComponent {
 
   }
 
-  getMovies() {
-    this._movieService.movie(1).subscribe(data => {
+  async getMovies() {
+    await this._movieService.movie(1).subscribe(data => {
       console.log(data);
     });
+    console.log("consulta");
   }
 
-  post() {
-    this._movieService.newMovie({id: 1, name: "my name", type: 3}).subscribe(data => {
+  async post() {
+    await this._movieService.newMovie({id: 1, name: "my name", type: 3}).subscribe(data => {
       console.log(data);
     });
   }
